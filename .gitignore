@@ -1,0 +1,10 @@
+/.idea
+/.vs
+/Core/obj
+/Core/bin
+/Application/obj
+/Application/bin
+/Infrastructure/obj
+/Infrastructure/bin
+/API/obj
+/API/bin
