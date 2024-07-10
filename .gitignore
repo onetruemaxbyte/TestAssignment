@@ -1,5 +1,6 @@
 /.idea
 /.vs
+/.containers
 /Core/obj
 /Core/bin
 /Application/obj
@@ -10,3 +11,5 @@
 /API/bin
 /Tests/obj
 /Tests/bin
+/obj
+/bin

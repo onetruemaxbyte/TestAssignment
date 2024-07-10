@@ -1,6 +1,18 @@
-﻿services:
-  postgres:
-    container_name: assignment_postgres
+version: '3.4'
+
+services:
+  api:
+    container_name: dev.api
+    image: ${DOCKER_REGISTRY-}assignment
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+
+  database:
+    container_name: dev.AssignmentDb
     image: postgres
     restart: always
     environment:
@@ -8,9 +20,6 @@
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - 5440:5432
+      - "5440:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
-
-volumes:
-  postgres-data:
+      - ./.containers/assignment-db:/var/lib/postgresql/data

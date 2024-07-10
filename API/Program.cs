@@ -9,6 +9,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5000);
+    // serverOptions.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps()); // Отключить эту строку
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
