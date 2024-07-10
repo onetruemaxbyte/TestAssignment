@@ -10,10 +10,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.WebHost.ConfigureKestrel(serverOptions =>
+builder.Services.AddCors(options =>
 {
-    serverOptions.ListenAnyIP(5000);
-    // serverOptions.ListenAnyIP(5001, listenOptions => listenOptions.UseHttps()); // Отключить эту строку
+    options.AddPolicy("AllowAll", cors =>
+    {
+        cors.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
 });
 
 var app = builder.Build();
