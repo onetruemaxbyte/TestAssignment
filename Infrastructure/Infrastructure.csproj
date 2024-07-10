@@ -10,4 +10,12 @@
       <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Controllers\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    </ItemGroup>
+
 </Project>
