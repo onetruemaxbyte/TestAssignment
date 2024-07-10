@@ -9,9 +9,12 @@ namespace API.Controllers;
 public class CandidateController(ICandidateService candidateService) :  ControllerBase
 {
     [HttpPost("createOrUpdate")]
-    public async Task<IActionResult> CreateOrUpdateCandidate([FromBody] CreateOrUpdateCandidateDto dto)
-    {   
-        var result = await candidateService.CreateOrUpdateCandidate(dto);
-        return Ok(result);
-    }
+         public async Task<IActionResult> CreateOrUpdateCandidate([FromBody] CreateOrUpdateCandidateDto dto)
+         {
+             if (dto is null) 
+                 return BadRequest("Candidate data is null."); 
+             
+             var result = await candidateService.CreateOrUpdateCandidate(dto);
+             return Ok(result);
+         }
 }
