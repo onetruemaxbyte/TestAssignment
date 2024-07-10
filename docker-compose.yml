@@ -1,18 +1,6 @@
 version: '3.4'
 
 services:
-  api:
-    container_name: dev.api
-    image: ${DOCKER_REGISTRY-}assignment
-    build:
-      context: .
-      dockerfile: API/Dockerfile
-    ports:
-      - "5000:5000"
-      - "5001:5001"
-    depends_on:
-      - database
-
   database:
     container_name: dev.AssignmentDb
     image: postgres
@@ -25,3 +13,27 @@ services:
       - "5440:5432"
     volumes:
       - ./.containers/assignment-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    container_name: dev.api
+    image: ${DOCKER_REGISTRY-}assignment
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
